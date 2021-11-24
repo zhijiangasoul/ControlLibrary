@@ -1,0 +1,40 @@
+﻿<Window x:Class="CustomUserControlLibrary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Converter="clr-namespace:CustomUserControlLibrary.Converter"
+        xmlns:Con="clr-namespace:CustomUserControlLibrary.Control"
+        xmlns:local="clr-namespace:CustomUserControlLibrary"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"  >
+    <Window.Resources>
+        <Converter:TestConverter x:Key="testConverter"></Converter:TestConverter>
+        <FontFamily x:Key="MyFont1">/#Score Board</FontFamily>
+        <FontFamily x:Key="MyFont2">/#阿里巴巴普康体 Medium</FontFamily>
+        <FontFamily x:Key="MyFont3">/#Roboto Black</FontFamily>
+        <FontFamily x:Key="MyFont4">/#Roboto</FontFamily>
+        <FontFamily x:Key="MyFont5">/#Roboto Condensed</FontFamily>
+        <FontFamily x:Key="MyFont6">/#不存在的字体</FontFamily>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
+            <TextBox Width="200" Name="SongId" TextWrapping="NoWrap" FontSize="20"></TextBox>
+            <Label Content="歌曲编号"></Label>
+            <Button Width="50" Click="Play_Music">
+                <Label Content="播放"></Label>
+            </Button>  
+            
+            <Button Width="60" Click="Load_Lrc">
+                <Label Content="导入LRC"></Label>
+            </Button>
+        </WrapPanel>
+        <StackPanel Name="MainPanel" Grid.Row="1" Grid.RowSpan="2" Background="Transparent">
+
+        </StackPanel>
+    </Grid>
+</Window>

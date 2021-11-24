@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="CustomUserControlLibrary.Control.ResetEventControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CustomUserControlLibrary.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="240" d:DesignWidth="200" Loaded="UserControl_Loaded">
+    <StackPanel>
+        <StackPanel Height="100">
+            <Button Height="100">
+                <StackPanel>
+                    <Label Content="AutoResetEvent1"></Label>
+                    <Label Content="当前状态"></Label>
+                    <Label Name="EventState1" Content="启动"></Label>
+                </StackPanel>
+            </Button>
+            <Button Height="100">
+                <StackPanel>
+                    <Label Content="AutoResetEvent2"></Label>
+                    <Label Content="当前状态"></Label>
+                    <Label Name="EventState2" Content="关闭"></Label>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <StackPanel Height="140">
+            <TextBox Height="auto" MaxWidth="200" Name="ShowTextBox" TextWrapping="Wrap"></TextBox>
+        </StackPanel>
+       
+    </StackPanel>
+</UserControl>

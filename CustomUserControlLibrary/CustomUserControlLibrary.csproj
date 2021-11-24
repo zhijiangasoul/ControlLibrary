@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BEDB4533-7DD0-4659-B1BD-2E0BA749F7ED}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CustomUserControlLibrary</RootNamespace>
+    <AssemblyName>CustomUserControlLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.2.59611, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=47d7877cb3620160">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\zlib.net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Control\AsyncControl.xaml.cs">
+      <DependentUpon>AsyncControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\ConvertControl.xaml.cs">
+      <DependentUpon>ConvertControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\CountDownControl.xaml.cs">
+      <DependentUpon>CountDownControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\LrcShowControl.xaml.cs">
+      <DependentUpon>LrcShowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\LrcUserControl.xaml.cs">
+      <DependentUpon>LrcUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\RalativeSourceControl.xaml.cs">
+      <DependentUpon>RalativeSourceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\ResetEventControl.xaml.cs">
+      <DependentUpon>ResetEventControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\ScrollTextBlockControl.xaml.cs">
+      <DependentUpon>ScrollTextBlockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\BaseBind.cs" />
+    <Compile Include="Converter\HealthShowConvert.cs" />
+    <Compile Include="Converter\ObservableObject.cs" />
+    <Compile Include="Converter\TestConverter.cs" />
+    <Compile Include="Converter\ValueToProcessConverter.cs" />
+    <Compile Include="Model\Unclemodel\BigEndianBitConverter.cs" />
+    <Compile Include="Model\Unclemodel\DANMU_MSG.cs" />
+    <Compile Include="Model\Unclemodel\EndianBitConverter.cs" />
+    <Compile Include="Model\Unclemodel\LittleEndianBitConverter.cs" />
+    <Compile Include="Model\Unclemodel\RoomConfig.cs" />
+    <Compile Include="Model\Unclemodel\RoomInfo.cs" />
+    <Compile Include="Model\Unclemodel\SingleConverter.cs" />
+    <Compile Include="Model\WYYmodel\NeteaseMusicAPI.cs" />
+    <Compile Include="Model\PersonInfoModel.cs" />
+    <Compile Include="Model\TestModel.cs" />
+    <Compile Include="Control\HealthPointControl.xaml.cs">
+      <DependentUpon>HealthPointControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WYYmodel\NeteaseMusicUtils.cs" />
+    <Compile Include="Model\WYYmodel\NeteaseMusicVO.cs" />
+    <Compile Include="Model\WYYmodel\SongUrls.cs" />
+    <Compile Include="Server\LogServer.cs" />
+    <Compile Include="Server\MainServer.cs" />
+    <Compile Include="Server\UncleWebsocketService.cs" />
+    <Compile Include="Server\WebClientTime.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\ViewBoxTest.xaml.cs">
+      <DependentUpon>ViewBoxTest.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Control\AsyncControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\ConvertControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\CountDownControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\LrcShowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\LrcUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\RalativeSourceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\ResetEventControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\ScrollTextBlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Style\StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\HealthPointControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewBoxTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\TestModel_1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Alibaba-PuHuiTi-Medium.ttf" />
+    <None Include="DLL\NLog.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Resource Include="resource\content_icon_exit_mode_off.png" />
+    <Resource Include="Image\alien.png" />
+    <Resource Include="Image\eva.png" />
+    <Resource Include="Image\tina.png" />
+    <Resource Include="Image\le.png" />
+    <Resource Include="Image\bella.png" />
+    <Resource Include="resource\images\play.png" />
+    <Resource Include="resource\images\Rain.png" />
+    <Resource Include="resource\images\Snow.png" />
+    <Resource Include="resource\images\startBackground.jpg" />
+    <Resource Include="resource\images\Stop.png" />
+    <Resource Include="resource\images\更新.png" />
+    <Content Include="DLL\NLog.dll" />
+    <Resource Include="DLL\NLog.xml" />
+    <Content Include="DLL\websocket-sharp.dll" />
+    <Content Include="DLL\zlib.net.dll" />
+    <Content Include="scoreboard.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Roboto-Black.ttf" />
+    <Resource Include="Roboto-BlackItalic.ttf" />
+    <Resource Include="Roboto-Bold.ttf" />
+    <Resource Include="RobotoCondensed-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

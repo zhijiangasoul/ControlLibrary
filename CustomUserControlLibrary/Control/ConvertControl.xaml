@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="CustomUserControlLibrary.Control.ConvertControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CustomUserControlLibrary.Control"
+             xmlns:SIn="clr-namespace:CustomUserControlLibrary.Converter"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="250">
+    <UserControl.Resources>
+        <SIn:HealthShowConvert x:Key="HealthShowConverter"></SIn:HealthShowConvert>
+    </UserControl.Resources>
+    <StackPanel Background="White">
+        <TextBlock Text="{Binding testText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource HealthShowConverter}}"></TextBlock>
+        <Button Height="20" Click="Button_Click"></Button>
+    </StackPanel>
+</UserControl>
