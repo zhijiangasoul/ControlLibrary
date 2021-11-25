@@ -33,8 +33,8 @@
                 <Label Content="导入LRC"></Label>
             </Button>
         </WrapPanel>
-        <StackPanel Name="MainPanel" Grid.Row="1" Grid.RowSpan="2" Background="Transparent">
-
+        <StackPanel Name="MainPanel" Grid.Row="1" Grid.RowSpan="2">
+           
         </StackPanel>
     </Grid>
 </Window>

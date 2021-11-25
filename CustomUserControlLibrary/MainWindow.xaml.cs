@@ -29,6 +29,7 @@ namespace CustomUserControlLibrary
         public delegate void GetMessageDataDelegate(object model);
         public GetMessageDataDelegate GetMessageHandler { get; set; }
         public UncleWebsocketService uncleWebsocketService { get; set; }
+        public MainServer mainServer=new MainServer();
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +39,10 @@ namespace CustomUserControlLibrary
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            LrcShowControl lrcShowControl = new LrcShowControl("28417153");
+            MainPanel.Children.Add(lrcShowControl);
+
+
 
         }
         public void initUncleSocket()
@@ -72,6 +77,10 @@ namespace CustomUserControlLibrary
 
         private void Load_Lrc(object sender, RoutedEventArgs e)
         {
+            //28417153
+            string a = mainServer.CommonGet(@"http://music.163.com/api/song/media?id=28417153");
+
+
 
         }
 
