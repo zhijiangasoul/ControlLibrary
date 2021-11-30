@@ -6,8 +6,14 @@
         xmlns:Converter="clr-namespace:CustomUserControlLibrary.Converter"
         xmlns:Con="clr-namespace:CustomUserControlLibrary.Control"
         xmlns:local="clr-namespace:CustomUserControlLibrary"
+        Style="{StaticResource MyWindow}"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"  >
+        Title="MainWindow" Height="1080" Width="1920"  >
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="1" CaptionHeight="1" CornerRadius="0"></WindowChrome>
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <Converter:TestConverter x:Key="testConverter"></Converter:TestConverter>
         <FontFamily x:Key="MyFont1">/#Score Board</FontFamily>
@@ -18,23 +24,49 @@
         <FontFamily x:Key="MyFont6">/#不存在的字体</FontFamily>
     </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="224"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="56"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
-            <TextBox Width="200" Name="SongId" TextWrapping="NoWrap" FontSize="20"></TextBox>
-            <Label Content="歌曲编号"></Label>
-            <Button Width="50" Click="Play_Music">
-                <Label Content="播放"></Label>
-            </Button>  
-            
-            <Button Width="60" Click="Load_Lrc">
-                <Label Content="导入LRC"></Label>
-            </Button>
+        <Grid Grid.Column="0" Grid.RowSpan="2" HorizontalAlignment="Stretch">
+            <Grid.Background>
+                <LinearGradientBrush>
+                    <GradientStop Offset="0" Color="#3770B9"/>
+                    <GradientStop Offset="1" Color="#081B41"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+        <WrapPanel Grid.Row="0" Grid.Column="0">
+            <Image Source="resource/images/Snow.png"></Image>
+            <TextBlock Foreground="White" FontSize="18"  VerticalAlignment="Center">控件库</TextBlock>
         </WrapPanel>
-        <StackPanel Name="MainPanel" Grid.Row="1" Grid.RowSpan="2">
-           
-        </StackPanel>
+        <Grid Grid.Column="1" Grid.Row="0" Background="White">
+            <WrapPanel HorizontalAlignment="Right"  VerticalAlignment="Center">
+                <Border Background="White" Tag="1" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                    <Path Data="{StaticResource Icon_Min}"  Fill="Black" Stretch="Fill" Height="2" Margin="0 0 20 0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="25"></Path>
+                </Border>
+                <Border Background="White" Tag="2" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                    <Path Data="{StaticResource Icon_Max}" Stretch="Fill" VerticalAlignment="Center" Margin="0 0 20 0" Height="24" Width="25" Fill="#74787F" HorizontalAlignment="Right"  ></Path>
+                </Border>
+                <Border Background="White" Tag="3" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                    <Path Data="{StaticResource Icon_Close}" Stretch="Fill" VerticalAlignment="Center"  Height="24" Margin="0 0 20 0"  Width="25" Fill="#74787F" HorizontalAlignment="Right"  ></Path>
+                </Border>
+            </WrapPanel>
+        </Grid>
+        <ScrollViewer x:Name="ScrollviewerList" Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" FocusVisualStyle="{x:Null}">
+            <StackPanel Name="MainMenu">
+                
+            </StackPanel>
+        </ScrollViewer>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Background="White" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="MainPanel">
+            <Grid x:Name="MainStackPanel"   FocusVisualStyle="{x:Null}">
+                
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>

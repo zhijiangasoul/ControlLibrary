@@ -95,11 +95,16 @@
     <Compile Include="Control\ScrollTextBlockControl.xaml.cs">
       <DependentUpon>ScrollTextBlockControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\UserControlMenuItem.xaml.cs">
+      <DependentUpon>UserControlMenuItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\BaseBind.cs" />
     <Compile Include="Converter\HealthShowConvert.cs" />
     <Compile Include="Converter\ObservableObject.cs" />
     <Compile Include="Converter\TestConverter.cs" />
     <Compile Include="Converter\ValueToProcessConverter.cs" />
+    <Compile Include="Model\ItemMenu.cs" />
+    <Compile Include="Model\SubItem.cs" />
     <Compile Include="Model\Unclemodel\BigEndianBitConverter.cs" />
     <Compile Include="Model\Unclemodel\DANMU_MSG.cs" />
     <Compile Include="Model\Unclemodel\EndianBitConverter.cs" />
@@ -154,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\ScrollTextBlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\UserControlMenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,6 +233,7 @@
     <Resource Include="DLL\NLog.xml" />
     <Content Include="DLL\websocket-sharp.dll" />
     <Content Include="DLL\zlib.net.dll" />
+    <Resource Include="resource\images\min.png" />
     <Content Include="scoreboard.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

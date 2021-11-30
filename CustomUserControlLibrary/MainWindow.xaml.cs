@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.IO;
 using CustomUserControlLibrary.Server;
+using CustomUserControlLibrary.View;
 
 namespace CustomUserControlLibrary
 {
@@ -29,51 +30,75 @@ namespace CustomUserControlLibrary
         public delegate void GetMessageDataDelegate(object model);
         public GetMessageDataDelegate GetMessageHandler { get; set; }
         public UncleWebsocketService uncleWebsocketService { get; set; }
-        public MainServer mainServer=new MainServer();
+        public MainServer mainServer = new MainServer();
         public MainWindow()
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
-            ClearTemp();           
+            ClearTemp();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            LrcShowControl lrcShowControl = new LrcShowControl("28417153");
-            MainPanel.Children.Add(lrcShowControl);
+            InitMainMenu();
+        }
+        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView ltem = sender as ListView;
+            SubItem item_0 = ltem.SelectedItem as SubItem;
+            switch (item_0.Name)
+            {
+                case "歌词显示":
+                    LrcShowControl healthPointControl = new LrcShowControl("28417153");
+                    MainStackPanel.Children.Add(healthPointControl);
+                    break;
+                case "2":
+                    break;
+                case "3":
 
+                    break;
+                case "4":
+                    break;
+            }
 
+            
+        }
 
+        public void InitMainMenu()
+        {
+            var menuRegister = new List<SubItem>();
+            menuRegister.Add(new SubItem("歌词显示"));
+            menuRegister.Add(new SubItem("2"));
+            menuRegister.Add(new SubItem("3"));
+            menuRegister.Add(new SubItem("4"));
+            var item6 = new ItemMenu("控件列表", menuRegister);
+            UserControlMenuItem Fmenu1 = new UserControlMenuItem(item6);
+            Fmenu1.ListViewMenu.SelectionChanged += ListViewMenu_SelectionChanged;
+            MainMenu.Children.Add(Fmenu1);
         }
         public void initUncleSocket()
         {
             GetMessageHandler = new GetMessageDataDelegate(GetOtherHeartDataCallback);
             uncleWebsocketService = new UncleWebsocketService(GetMessageHandler, "22632424");
         }
-
         private void GetOtherHeartDataCallback(object model)
         {
-           //添加到投票器
+            //添加到投票器
         }
-        TestModel testModel = new TestModel();
-        TestModel_1 testModel_1 = new TestModel_1();
+        //   28417153
+        //private void Play_Music(object sender, RoutedEventArgs e)
+        //{
 
-     //   28417153
-
-
-        private void Play_Music(object sender, RoutedEventArgs e)
-        {
-
-            if (string.IsNullOrEmpty(SongId.Text))
-            {
-                return;
-            }
-            MainPanel.Children.Clear();
-            System.Threading.Thread.Sleep(2000);
-            GC.Collect();
-            LrcShowControl lrcShowControl = new LrcShowControl(SongId.Text);
-            MainPanel.Children.Add(lrcShowControl);
-        }
+        //    if (string.IsNullOrEmpty(SongId.Text))
+        //    {
+        //        return;
+        //    }
+        //    MainPanel.Children.Clear();
+        //    System.Threading.Thread.Sleep(2000);
+        //    GC.Collect();
+        //    LrcShowControl lrcShowControl = new LrcShowControl(SongId.Text);
+        //    MainPanel.Children.Add(lrcShowControl);
+        //}
 
         private void Load_Lrc(object sender, RoutedEventArgs e)
         {
@@ -107,5 +132,21 @@ namespace CustomUserControlLibrary
         }
 
         #endregion
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Border bd = sender as Border;
+            switch (bd.Tag.ToString())
+            {
+                case "1":
+                    this.WindowState = WindowState.Minimized;
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    this.Close();
+                    break;
+            }
+        }
     }
 }
