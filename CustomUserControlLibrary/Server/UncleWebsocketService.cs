@@ -29,6 +29,13 @@ namespace CustomUserControlLibrary.Server
             Roomid = roomid;
             InitWebSocket();
         }
+
+        public void AbortWebSocket()
+        {
+            _webSocket.Close();
+        }
+        //22632424
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -66,7 +73,7 @@ namespace CustomUserControlLibrary.Server
                 //char[] arr = JsonConvert.SerializeObject(param).ToCharArray();
                 //    byte[] byteData = StringToBinary(JsonConvert.SerializeObject(param));
                 _webSocket.Send(SendSocketDataAsync(7, playload));
-              //  AddBarrage("系统初始化", "WebSocket连接成功");
+                getMessageHandler("弹幕服务器初始化,WebSocket连接成功");
                 initTimer();
             }
             catch (Exception exception)
@@ -217,6 +224,7 @@ namespace CustomUserControlLibrary.Server
             {
                 try
                 {
+                    LogServer.Error("报错类型" + exception);
                     LogServer.Error("异常消息" + ErrorString);
                     //  AddBarrage("WebSocket接收到消息异常");
                 }
@@ -254,7 +262,7 @@ namespace CustomUserControlLibrary.Server
                         if (null != getMessageHandler)
                         {
                             //省略转换
-                            getMessageHandler(Danmu); //调用委托函数
+                            getMessageHandler(BarrageTxt); //调用委托函数
                         }
                         break;
                     }

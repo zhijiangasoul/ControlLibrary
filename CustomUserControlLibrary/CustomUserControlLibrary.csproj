@@ -127,6 +127,9 @@
     <Compile Include="Server\WebClientTime.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TestMainWindow.xaml.cs">
+      <DependentUpon>TestMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ViewBoxTest.xaml.cs">
       <DependentUpon>ViewBoxTest.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\HealthPointControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
