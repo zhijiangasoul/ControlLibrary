@@ -50,7 +50,7 @@ namespace CustomUserControlLibrary
         {
             BarrageListView.ItemsSource = BarrageList;
             InitMainMenu();
-            AddBarrage("绑定测试");
+           // AddBarrage("绑定测试");
         }
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -60,7 +60,8 @@ namespace CustomUserControlLibrary
             switch (item_0.Name)
             {
                 case "歌词显示":
-                    LrcShowControl lrcShowControl = new LrcShowControl("28417153");
+                    LrcShowControl lrcShowControl = new LrcShowControl();
+                    lrcShowControl.PlaySong("28417153");
                     MainStackPanel.Children.Add(lrcShowControl);
                     break;
                 case "血条":
@@ -72,6 +73,8 @@ namespace CustomUserControlLibrary
                 case "投票器":
                     break;
                 case "倒计时":
+                    CountDownControl countDownControl = new CountDownControl(60,true);
+                    MainStackPanel.Children.Add(countDownControl);
                     break;
                 case "弹幕上屏":
                     break;
@@ -86,8 +89,8 @@ namespace CustomUserControlLibrary
                 {
                     BarrageList.RemoveAt(0);
                 }
-                //   BarrageStyle model = new BarrageStyle();
-                //  model.Barrage = Result;
+                //BarrageStyle model = new BarrageStyle();
+                //model.Barrage = Result;
                 BarrageList.Add(Result);
           //      BarrageListView.Items.Add(Result);
                 //   BarrageListView.SelectedIndex = BarrageListView.Items.Count - 1;
