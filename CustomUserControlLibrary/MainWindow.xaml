@@ -41,8 +41,8 @@
             </Grid.Background>
         </Grid>
         <WrapPanel Grid.Row="0" Grid.Column="0">
-            <Image Source="resource/images/Snow.png"></Image>
-            <TextBlock Foreground="White" FontSize="18"  VerticalAlignment="Center">控件库</TextBlock>
+            <Image Source="Image/bella.png"></Image>
+            <TextBlock Foreground="White" FontSize="18"  VerticalAlignment="Center">枝江控件库</TextBlock>
         </WrapPanel>
         <Grid Grid.Column="1" Grid.Row="0" Background="White">
             <WrapPanel HorizontalAlignment="Right"  VerticalAlignment="Center">

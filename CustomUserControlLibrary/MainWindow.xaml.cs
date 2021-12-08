@@ -50,7 +50,7 @@ namespace CustomUserControlLibrary
         {
             BarrageListView.ItemsSource = BarrageList;
             InitMainMenu();
-            AddBarrage("绑定测试");
+            AddBarrage("弹幕绑定测试");
         }
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -60,7 +60,8 @@ namespace CustomUserControlLibrary
             switch (item_0.Name)
             {
                 case "歌词显示":
-                    LrcShowControl lrcShowControl = new LrcShowControl("28417153");
+                    LrcShowControl lrcShowControl = new LrcShowControl();
+                    lrcShowControl.InitSong("28417153");
                     MainStackPanel.Children.Add(lrcShowControl);
                     break;
                 case "血条":
