@@ -28,7 +28,6 @@ namespace CustomUserControlLibrary.Control
         NeteaseMusicAPI api = null;
         DispatcherTimer dt;
         SearchInfo globalSearchInfo = new SearchInfo();
-
         public string path = AppDomain.CurrentDomain.BaseDirectory;
         public string SongUrl;
         // 输出文件编码
@@ -40,8 +39,10 @@ namespace CustomUserControlLibrary.Control
         // 输出文件名类型
         OUTPUT_FILENAME_TYPE_ENUM output_filename_type_enum;
 
-        public void PlaySong(string SongId, string Lrc = null)
+
+        public LrcShowControl(string SongId,string Lrc=null)
         {
+            InitializeComponent();
             ReloadConfig();
             string lrc = "";
             api = new NeteaseMusicAPI();
@@ -50,9 +51,9 @@ namespace CustomUserControlLibrary.Control
             string SongPath = path + "temp/" + DateTime.Now.ToString("ffffff") + ".mp3";
             DownloadFile(SongUrl, SongPath);
             System.Threading.Thread.Sleep(2000);
-
-            LrcView.LoadLrc(lrc);
-
+            
+                LrcView.LoadLrc(lrc);
+           
             //初始化计时器
             dt = new DispatcherTimer();
             /*
@@ -97,14 +98,6 @@ namespace CustomUserControlLibrary.Control
                 TimeSpan ts = new TimeSpan(0, st.m, st.s);
                 metime.Text = ts.ToString("mm") + ":" + ts.ToString("ss");
             };
-
-        }
-
-
-        public LrcShowControl()
-        {
-            InitializeComponent();
-           
         }
 
         public bool DownloadFile(string url, string destFilePath)
@@ -142,7 +135,7 @@ namespace CustomUserControlLibrary.Control
         }
 
 
-       public void LrcRoll()
+        void LrcRoll()
         {
 
             metime.Text = me.Position.ToString("mm") + ":" + me.Position.ToString("ss");
@@ -199,15 +192,7 @@ namespace CustomUserControlLibrary.Control
                 return "";
             }
             SongUrl = songVO.Links;
-
-            List<LyricVO> lyricVOs = new List<LyricVO>();
-
-            lyricVOs = RequestLyricVO(songId, globalSearchInfo);
-
-            LyricVO lyricVO = lyricVOs[0];
-
-
-
+            LyricVO lyricVO = RequestLyricVO(songId, globalSearchInfo);
             if (!lyricVO.Success)
             {
                 MessageBox.Show(songVO.Message, "提示");
@@ -228,7 +213,6 @@ namespace CustomUserControlLibrary.Control
             globalSearchInfo.Constraint2Dot = false;
             globalSearchInfo.BatchSearch = false;
             globalSearchInfo.LrcMergeSeparator = "";
-            
         }
         private SongVO RequestSongVO(long songId)
         {
@@ -238,13 +222,10 @@ namespace CustomUserControlLibrary.Control
             return NeteaseMusicUtils.GetSongVO(songUrls, detailResult);
         }
 
-        private List<LyricVO> RequestLyricVO(long songId, SearchInfo searchInfo)
+        private LyricVO RequestLyricVO(long songId, SearchInfo searchInfo)
         {
-
             LyricResult lyricResult = api.GetLyric(songId);
-            List<LyricVO> lyricVOs = new List<LyricVO>();
-            lyricVOs.Add(NeteaseMusicUtils.GetLyricVO(lyricResult, searchInfo));
-            return lyricVOs;
+            return NeteaseMusicUtils.GetLyricVO(lyricResult, searchInfo);
         }
 
 

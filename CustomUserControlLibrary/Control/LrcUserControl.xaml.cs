@@ -159,8 +159,7 @@ namespace CustomUserControlLibrary.Control
                 if (s.Count() > 0)
                 {
                     LrcModel lm = s.Last().Value;
-                   foucslrc.c_LrcTb.Foreground = NoramlLrcColor;
-
+                    foucslrc.c_LrcTb.Foreground = NoramlLrcColor;
 
                     foucslrc = lm;
                     foucslrc.c_LrcTb.Foreground = FoucsLrcColor;

@@ -250,7 +250,7 @@ namespace CustomUserControlLibrary.Model.WYYmodel
                     }
                     else
                     {
-                        list[index] = subStr1 + "\r" + subStr2;
+                        list[index] = subStr1 + splitStr + subStr2;
                     }
                 }
             }
