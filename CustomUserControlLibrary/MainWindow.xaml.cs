@@ -28,12 +28,6 @@ namespace CustomUserControlLibrary
     public partial class MainWindow : Window
     {
         public ObservableCollection<object> BarrageList = new ObservableCollection<object>();
-
-
-
-
-
-
         public List<PersonInfoModel> personInfoModels = new List<PersonInfoModel>();
         public delegate void GetMessageDataDelegate(object model);
         public GetMessageDataDelegate GetMessageHandler { get; set; }
@@ -42,6 +36,7 @@ namespace CustomUserControlLibrary
         public MainWindow()
         {
             InitializeComponent();
+            SelectPath();
             this.Loaded += MainWindow_Loaded;
             ClearTemp();
         }
@@ -60,25 +55,48 @@ namespace CustomUserControlLibrary
             switch (item_0.Name)
             {
                 case "歌词显示":
+                   // Load_Lrc(null,null);或者直接加载lrc到本地在传参
                     LrcShowControl lrcShowControl = new LrcShowControl();
                     lrcShowControl.InitSong("28417153");
+                  //  lrcShowControl.InitSong("","local", SelectPath(), SelectPath()); 没测
                     MainStackPanel.Children.Add(lrcShowControl);
                     break;
                 case "血条":
-                    HealthPointControl healthPointControl = new HealthPointControl();
-                    MainStackPanel.Children.Add(healthPointControl);
-                    break;
-                case "油麻条":
+                    //HealthPointControl healthPointControl = new HealthPointControl();
+                    //MainStackPanel.Children.Add(healthPointControl);
                     break;
                 case "投票器":
                     break;
                 case "倒计时":
+                    CountDownControl countDownControl = new CountDownControl(60,false);
+                    MainStackPanel.Children.Add(countDownControl);
                     break;
                 case "弹幕上屏":
                     break;
             }
         }
 
+
+        private string SelectPath()
+        {
+            string path = string.Empty;
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog()
+            {
+                Filter = "(*.*)|*.*"//筛选条件 "(*.*)|*.*.mp3|描述写什么都行(*.txt)|*.txt|(*.*)|*.*              
+            };
+            openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            openFileDialog.Title = "选择歌词文件";
+            var result = openFileDialog.ShowDialog();
+            if (result == true)
+            {
+                path = openFileDialog.FileName;
+            }
+            else
+            {
+                return null;
+            }
+            return path;
+        }
         public void AddBarrage(string Result)
         {
             this.Dispatcher.Invoke(new Action(delegate
@@ -95,15 +113,11 @@ namespace CustomUserControlLibrary
                 BarrageListView.ScrollIntoView(BarrageListView.SelectedItem);
             }));
         }
-
-
-
         public void InitMainMenu()
         {
             var menuRegister = new List<SubItem>();
             menuRegister.Add(new SubItem("歌词显示"));
             menuRegister.Add(new SubItem("血条"));
-            menuRegister.Add(new SubItem("油麻条"));
             menuRegister.Add(new SubItem("投票器"));
             menuRegister.Add(new SubItem("弹幕上屏"));
             var item6 = new ItemMenu("控件列表", menuRegister);
@@ -141,9 +155,24 @@ namespace CustomUserControlLibrary
             //28417153
             string a = mainServer.CommonGet(@"http://music.163.com/api/song/media?id=28417153");
 
+            //http://music.qq.com/miniportal/static/lyric/${id%100}/${id}.xml`
+
 
 
         }
+
+        public string ReadTxtContent(string Path)
+        {
+            System.IO.StreamReader sr = new System.IO.StreamReader(Path, Encoding.UTF8);
+            string content;
+            while ((content = sr.ReadLine()) != null)
+            {
+                return content.ToString();
+            }
+            return null;
+        }
+
+
 
         #region 其他方法
         public void ClearTemp()

@@ -39,15 +39,25 @@ namespace CustomUserControlLibrary.Control
         // 输出文件名类型
         OUTPUT_FILENAME_TYPE_ENUM output_filename_type_enum;
 
-        public void InitSong(string SongId, string Lrc = null)
+        public void InitSong(string SongId,string LoadType="", string Lrc = "",string LocalSongPath="")
         {
             ReloadConfig();
             string lrc = "";
+            string SongPath = string.Empty;
             api = new NeteaseMusicAPI();
-            lrc = SingleSearch(SongId);
-            string SongPath = path + "temp/" + DateTime.Now.ToString("ffffff") + ".mp3";
-            DownloadFile(SongUrl, SongPath);
-            System.Threading.Thread.Sleep(2000);
+            if(LoadType=="local")
+            {
+                lrc = Lrc;
+                SongPath = LocalSongPath;
+            }
+            else 
+            {
+                lrc = SingleSearch(SongId);
+                SongPath = path + "temp/" + DateTime.Now.ToString("ffffff") + ".mp3";
+                DownloadFile(SongUrl, SongPath);
+                System.Threading.Thread.Sleep(2000);
+            }
+          
             LrcView.LoadLrc(lrc);
 
             //初始化计时器
