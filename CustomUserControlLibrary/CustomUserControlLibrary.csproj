@@ -95,6 +95,9 @@
     <Compile Include="Control\ScrollTextBlockControl.xaml.cs">
       <DependentUpon>ScrollTextBlockControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\SongControl.xaml.cs">
+      <DependentUpon>SongControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Control\UserControlMenuItem.xaml.cs">
       <DependentUpon>UserControlMenuItem.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,8 @@
     <Compile Include="Converter\ValueToProcessConverter.cs" />
     <Compile Include="Model\ItemMenu.cs" />
     <Compile Include="Model\SubItem.cs" />
+    <Compile Include="Model\TencentModel\SearchSongModel.cs" />
+    <Compile Include="Model\TencentModel\TencentModel.cs" />
     <Compile Include="Model\Unclemodel\BigEndianBitConverter.cs" />
     <Compile Include="Model\Unclemodel\DANMU_MSG.cs" />
     <Compile Include="Model\Unclemodel\EndianBitConverter.cs" />
@@ -162,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\ScrollTextBlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\SongControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

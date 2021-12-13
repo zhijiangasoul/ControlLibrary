@@ -19,6 +19,7 @@ using System.IO;
 using CustomUserControlLibrary.Server;
 using CustomUserControlLibrary.View;
 using System.Collections.ObjectModel;
+using CustomUserControlLibrary.Model.TencentModel;
 
 namespace CustomUserControlLibrary
 {
@@ -28,6 +29,9 @@ namespace CustomUserControlLibrary
     public partial class MainWindow : Window
     {
         public ObservableCollection<object> BarrageList = new ObservableCollection<object>();
+        public ObservableCollection<object> SongList = new ObservableCollection<object>();
+
+
         public List<PersonInfoModel> personInfoModels = new List<PersonInfoModel>();
         public delegate void GetMessageDataDelegate(object model);
         public GetMessageDataDelegate GetMessageHandler { get; set; }
@@ -36,16 +40,23 @@ namespace CustomUserControlLibrary
         public MainWindow()
         {
             InitializeComponent();
-            SelectPath();
+          //  SelectPath();
             this.Loaded += MainWindow_Loaded;
             ClearTemp();
+         //   APItest();
+
+
         }
         //22632424
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             BarrageListView.ItemsSource = BarrageList;
+            SongListView.ItemsSource = SongList;
             InitMainMenu();
             AddBarrage("弹幕绑定测试");
+
+
+
         }
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -97,7 +108,11 @@ namespace CustomUserControlLibrary
             }
             return path;
         }
-        public void AddBarrage(string Result)
+
+
+
+
+            public void AddBarrage(string Result)
         {
             this.Dispatcher.Invoke(new Action(delegate
             {
@@ -149,18 +164,6 @@ namespace CustomUserControlLibrary
         //    LrcShowControl lrcShowControl = new LrcShowControl(SongId.Text);
         //    MainPanel.Children.Add(lrcShowControl);
         //}
-
-        private void Load_Lrc(object sender, RoutedEventArgs e)
-        {
-            //28417153
-            string a = mainServer.CommonGet(@"http://music.163.com/api/song/media?id=28417153");
-
-            //http://music.qq.com/miniportal/static/lyric/${id%100}/${id}.xml`
-
-
-
-        }
-
         public string ReadTxtContent(string Path)
         {
             System.IO.StreamReader sr = new System.IO.StreamReader(Path, Encoding.UTF8);
@@ -171,9 +174,6 @@ namespace CustomUserControlLibrary
             }
             return null;
         }
-
-
-
         #region 其他方法
         public void ClearTemp()
         {
@@ -214,9 +214,110 @@ namespace CustomUserControlLibrary
             }
         }
 
+        public void APItest()
+        {
+            Load_Lrc("quiet");
+            GetVkey(staticStr);
+        }
+
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             initUncleSocket(FRoomid.Text);
+        }
+
+        private void SongSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Load_Lrc(FSongName.Text);
+
+            
+
+        }
+
+        public string staticStr;
+
+        private void Load_Lrc(string SongName)
+        {
+            //28417153
+            //string a = mainServer.CommonGet(@"http://music.163.com/api/song/media?id=28417153");
+
+            string SongInfoJson = mainServer.CommonGet(@"https://c.y.qq.com/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0&p=1&n=5&w=" + SongName);
+            SongInfoJson = SongInfoJson.Replace("callback", "");
+            SongInfoJson = RemoveLastStr(RemoveFirstStr(SongInfoJson));
+            SearchSongModel searchSongModel = JsonConvert.DeserializeObject<SearchSongModel>(SongInfoJson);
+            SongList.Clear();
+            foreach (SearchSongModel.List SongInfo in searchSongModel.data.song.list)
+            {
+                staticStr = SongInfo.songmid;
+                   TextBlock textBlock = new TextBlock();
+                textBlock.Tag = SongInfo;
+                textBlock.Text = SongName + "——" + SongInfo.singer[0].name;
+                textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
+                textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
+                SongList.Add(textBlock);
+            }
+        }
+
+
+
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textBlock = sender as TextBlock;
+
+            SearchSongModel.List SongInfo = textBlock.Tag as SearchSongModel.List;
+            GetVkey(SongInfo.songmid);
+        }
+
+
+       // 
+
+        public void GetVkey(string SongMid)
+        {
+            //byte[] buffer = Guid.NewGuid().ToByteArray();//生成字节数组
+            //int iRoot = BitConverter.ToInt32(buffer, 0);//利用BitConvert方法把字节数组转换为整数
+            //Random rdmNum = new Random(iRoot);
+            string SongInfoJson = mainServer.CommonGet(@"http://ws.stream.qqmusic.qq.com/C100"+ SongMid + ".m4a?fromtag=0&guid=126548448");
+        }
+
+        public string GetRandomGuid()
+        {
+            byte[] buffer = Guid.NewGuid().ToByteArray();//生成字节数组
+            int iRoot = BitConverter.ToInt32(buffer, 0);//利用BitConvert方法把字节数组转换为整数
+            Random rdmNum = new Random();
+            string str = rdmNum.Next().ToString();
+            buffer = null;
+            return str;
+        }
+
+
+
+        public void AddSong(string Result)
+        {
+            this.Dispatcher.Invoke(new Action(delegate
+            {
+                //   BarrageStyle model = new BarrageStyle();
+                //  model.Barrage = Result;
+                SongList.Add(Result);
+                //      BarrageListView.Items.Add(Result);
+                //   BarrageListView.SelectedIndex = BarrageListView.Items.Count - 1;
+            }));
+        }
+
+
+
+
+
+        public string RemoveFirstStr(string str)
+        {
+            string targetstr = string.Empty;
+            targetstr = str.Substring(1, str.Length - 1);
+            return targetstr;
+        }
+
+        public string RemoveLastStr(string str)
+        {
+            string targetstr = string.Empty;
+            targetstr = str.Remove(str.Length - 1, 1);
+            return targetstr;
         }
     }
 }

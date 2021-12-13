@@ -71,10 +71,33 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Row="0" Grid.Column="1" Name="DataPanel" FocusVisualStyle="{x:Null}">
+                    <Grid>
+                        <WrapPanel HorizontalAlignment="Right" Height="40" VerticalAlignment="Top">
+                            <Border  Height="40" Width="200" Background="#F3F3F3"  CornerRadius="4" HorizontalAlignment="Right" Margin="0 0 30 0">
+                                <TextBox Name="FSongName"  FontSize="16" CaretBrush="Black" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Center"  
+                        Foreground="Black"  FontWeight="Bold" Width="160"  BorderThickness="0" Background="#F3F3F3" Template="{DynamicResource WaterMarkTextBox}" Tag="请输入歌曲名">
+                                </TextBox>
+                            </Border>
+                            <Button Style="{StaticResource Cancel_Button}"   Height="40" Width="120" Background="Red" Margin="0 0 30 0"  Name="SongSearch" Click="SongSearch_Click">
+                                <TextBlock Text="搜索" Foreground="#FFFFFF" FontSize="16"></TextBlock>
+                            </Button>
+                        </WrapPanel>
+                        <StackPanel VerticalAlignment="Bottom">
+                            <Label>QQ音乐API 没写完</Label>
+                            <Border Margin="0 0 0 -1" Name="SongBorderList" BorderThickness="2" CornerRadius="20 20 0 0" Grid.ColumnSpan="1" Grid.Row="0"  Background="Red" Height="10"/>
+                            <Border BorderBrush="Red" BorderThickness="2" CornerRadius="5"  Height="150">
+                                <ListView ListView.ItemContainerStyle="{StaticResource UserItemContainerStyle}"  Foreground="Black" FontSize="10"   BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="SongListView" ItemsSource="{Binding SongList}" >
+
+                                </ListView>
+                            </Border>
+
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Name="DataPanel" FocusVisualStyle="{x:Null}">
                         <WrapPanel HorizontalAlignment="Right" Height="40" VerticalAlignment="Top">
                             <Border  Height="40" Width="200" Background="#F3F3F3"  CornerRadius="4" HorizontalAlignment="Right" Margin="0 0 30 0">
                                 <TextBox Name="FRoomid"  FontSize="16" CaretBrush="Black" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Center"  

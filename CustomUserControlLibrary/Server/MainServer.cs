@@ -18,6 +18,14 @@ namespace CustomUserControlLibrary.Server
             }
             return this.DoGet(url);
         }
+        public string CommonPost(string url, object Param = null)
+        {
+            if (IsPrintApiRequestLog)
+            {
+                LogServer.Info("接口：【" + url + "】  参数：【" + JsonConvert.SerializeObject(Param) + "】 ");
+            }
+            return this.DoCommonPost(url, Param);
+        }
         public string DoGet(string Url)
         {
             string jsonStr = string.Empty;
@@ -37,14 +45,6 @@ namespace CustomUserControlLibrary.Server
                 }
             }
             return jsonStr;
-        }
-        public string CommonPost(string url, object Param = null)
-        {
-            if (IsPrintApiRequestLog)
-            {
-                LogServer.Info("接口：【" + url + "】  参数：【" + JsonConvert.SerializeObject(Param) + "】 ");
-            }
-            return this.DoCommonPost(url, Param);
         }
         public string DoCommonPost(string url, Object obj = null)
         {
@@ -70,6 +70,12 @@ namespace CustomUserControlLibrary.Server
             }
             return jsonStr;
         }
+
+
+
+
+
+
 
     }
 }

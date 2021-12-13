@@ -108,7 +108,6 @@
     <Style x:Key="UserItemContainerStyle" TargetType="ListBoxItem">
         <Setter Property="Height" Value="20"/>
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="IsHitTestVisible" Value="False"/>
         <Style.Resources>
             <SolidColorBrush Color="Transparent" x:Key="{x:Static SystemColors.HighlightBrushKey}"/>
             <SolidColorBrush Color="#FFC0CB" x:Key="{x:Static SystemColors.HighlightTextBrushKey}"/>
