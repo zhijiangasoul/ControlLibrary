@@ -107,6 +107,7 @@
     <Compile Include="Converter\TestConverter.cs" />
     <Compile Include="Converter\ValueToProcessConverter.cs" />
     <Compile Include="Model\ItemMenu.cs" />
+    <Compile Include="Model\SougouModel\SougouSearchModel.cs" />
     <Compile Include="Model\SubItem.cs" />
     <Compile Include="Model\TencentModel\SearchSongModel.cs" />
     <Compile Include="Model\TencentModel\TencentModel.cs" />
@@ -125,6 +126,7 @@
     </Compile>
     <Compile Include="Model\WYYmodel\NeteaseMusicUtils.cs" />
     <Compile Include="Model\WYYmodel\NeteaseMusicVO.cs" />
+    <Compile Include="Model\WYYmodel\SearchSongNameModel.cs" />
     <Compile Include="Model\WYYmodel\SongUrls.cs" />
     <Compile Include="Server\LogServer.cs" />
     <Compile Include="Server\MainServer.cs" />

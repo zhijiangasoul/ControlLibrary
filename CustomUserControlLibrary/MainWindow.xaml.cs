@@ -20,6 +20,8 @@ using CustomUserControlLibrary.Server;
 using CustomUserControlLibrary.View;
 using System.Collections.ObjectModel;
 using CustomUserControlLibrary.Model.TencentModel;
+using CustomUserControlLibrary.Model.WYYmodel;
+using CustomUserControlLibrary.Model.SougouModel;
 
 namespace CustomUserControlLibrary
 {
@@ -43,10 +45,13 @@ namespace CustomUserControlLibrary
           //  SelectPath();
             this.Loaded += MainWindow_Loaded;
             ClearTemp();
-         //   APItest();
+            //   APItest();
+
+         //   Load_KugouLrc("quiet");
 
 
         }
+        NeteaseMusicAPI api = new NeteaseMusicAPI();
         //22632424
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -54,6 +59,27 @@ namespace CustomUserControlLibrary
             SongListView.ItemsSource = SongList;
             InitMainMenu();
             AddBarrage("弹幕绑定测试");
+        }
+        public void WyySongSearch(string Songname)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("s", Songname);
+            dic.Add("offset", "0");
+            dic.Add("limit", "5");
+            dic.Add("type", "1");
+            SearchSongNameModel searchSongModel = JsonConvert.DeserializeObject<SearchSongNameModel>(api.GetSong(dic));
+
+            foreach(SearchSongNameModel.Song data in searchSongModel.result.songs)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Tag = data;
+                textBlock.Text = data.name + "——" + data.artists[0].name + " 来自网易云";
+                textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
+                textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
+                SongList.Add(textBlock);
+
+
+            }
 
 
 
@@ -214,12 +240,6 @@ namespace CustomUserControlLibrary
             }
         }
 
-        public void APItest()
-        {
-            Load_Lrc("quiet");
-            GetVkey(staticStr);
-        }
-
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             initUncleSocket(FRoomid.Text);
@@ -227,30 +247,47 @@ namespace CustomUserControlLibrary
 
         private void SongSearch_Click(object sender, RoutedEventArgs e)
         {
+            SongList.Clear();
             Load_Lrc(FSongName.Text);
+            WyySongSearch(FSongName.Text);
+            Load_KugouLrc(FSongName.Text);
 
-            
 
         }
+        //存档
+        //https://www.cnblogs.com/daxiangxm/p/migu_music_api.html
+        //https://www.cnblogs.com/daxiangxm/p/kugou_music_api.html
 
-        public string staticStr;
+        private void Load_KugouLrc(string SongName)
+        {
+            string SongInfoJson = mainServer.CommonGet(@"http://msearchcdn.kugou.com/api/v3/search/song?showtype=14&highlight=em&pagesize=5&tag_aggr=1&tagtype=全部&plat=0&sver=5&keyword="+ SongName + @"&correct=1&api_ver=1&version=9108&page=1&area_code=1&tag=1&with_res_tag=1" );
+            SongInfoJson = SongInfoJson.Substring(23, SongInfoJson.Length-44);
+            SougouSearchModel searchSongModel = JsonConvert.DeserializeObject<SougouSearchModel>(SongInfoJson);
+
+
+
+            foreach (SougouSearchModel.Info SongInfo in searchSongModel.data.info)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Tag = SongInfo;
+                textBlock.Text = SongName + "——" + SongInfo.singername + " 来自搜狗音乐";
+                textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
+                textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
+                SongList.Add(textBlock);
+            }
+        }
 
         private void Load_Lrc(string SongName)
         {
-            //28417153
-            //string a = mainServer.CommonGet(@"http://music.163.com/api/song/media?id=28417153");
-
             string SongInfoJson = mainServer.CommonGet(@"https://c.y.qq.com/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0&p=1&n=5&w=" + SongName);
             SongInfoJson = SongInfoJson.Replace("callback", "");
             SongInfoJson = RemoveLastStr(RemoveFirstStr(SongInfoJson));
             SearchSongModel searchSongModel = JsonConvert.DeserializeObject<SearchSongModel>(SongInfoJson);
-            SongList.Clear();
             foreach (SearchSongModel.List SongInfo in searchSongModel.data.song.list)
             {
-                staticStr = SongInfo.songmid;
                    TextBlock textBlock = new TextBlock();
                 textBlock.Tag = SongInfo;
-                textBlock.Text = SongName + "——" + SongInfo.singer[0].name;
+                textBlock.Text = SongName + "——" + SongInfo.singer[0].name +" 来自QQ音乐";
                 textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
                 textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
                 SongList.Add(textBlock);
@@ -261,10 +298,9 @@ namespace CustomUserControlLibrary
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TextBlock textBlock = sender as TextBlock;
-
-            SearchSongModel.List SongInfo = textBlock.Tag as SearchSongModel.List;
-            GetVkey(SongInfo.songmid);
+            //TextBlock textBlock = sender as TextBlock;
+            //SearchSongModel.List SongInfo = textBlock.Tag as SearchSongModel.List;
+            //GetVkey(SongInfo.songmid);
         }
 
 
@@ -318,6 +354,14 @@ namespace CustomUserControlLibrary
             string targetstr = string.Empty;
             targetstr = str.Remove(str.Length - 1, 1);
             return targetstr;
+        }
+
+        private void FSongName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key==Key.Enter&&!string.IsNullOrWhiteSpace(FSongName.Text))
+            {
+                SongSearch_Click(null,null);
+            }
         }
     }
 }

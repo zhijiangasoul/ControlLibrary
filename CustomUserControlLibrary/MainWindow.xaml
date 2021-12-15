@@ -67,7 +67,8 @@
             <Grid Margin="40">
                 <Grid.RowDefinitions >
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -78,7 +79,7 @@
                     <Grid>
                         <WrapPanel HorizontalAlignment="Right" Height="40" VerticalAlignment="Top">
                             <Border  Height="40" Width="200" Background="#F3F3F3"  CornerRadius="4" HorizontalAlignment="Right" Margin="0 0 30 0">
-                                <TextBox Name="FSongName"  FontSize="16" CaretBrush="Black" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Center"  
+                                <TextBox KeyDown="FSongName_KeyDown" Name="FSongName"  FontSize="16" CaretBrush="Black" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Center"  
                         Foreground="Black"  FontWeight="Bold" Width="160"  BorderThickness="0" Background="#F3F3F3" Template="{DynamicResource WaterMarkTextBox}" Tag="请输入歌曲名">
                                 </TextBox>
                             </Border>
@@ -87,7 +88,6 @@
                             </Button>
                         </WrapPanel>
                         <StackPanel VerticalAlignment="Bottom">
-                            <Label>QQ音乐API 没写完</Label>
                             <Border Margin="0 0 0 -1" Name="SongBorderList" BorderThickness="2" CornerRadius="20 20 0 0" Grid.ColumnSpan="1" Grid.Row="0"  Background="Red" Height="10"/>
                             <Border BorderBrush="Red" BorderThickness="2" CornerRadius="5"  Height="150">
                                 <ListView ListView.ItemContainerStyle="{StaticResource UserItemContainerStyle}"  Foreground="Black" FontSize="10"   BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Name="SongListView" ItemsSource="{Binding SongList}" >

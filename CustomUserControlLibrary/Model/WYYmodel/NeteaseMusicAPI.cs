@@ -48,6 +48,18 @@ namespace CustomUserControlLibrary.Model
             return deserialedObj;
         }
 
+
+        public string GetSong(Dictionary<string,string> data)
+        {
+            string url = "http://music.163.com/weapi/search/suggest/web?csrf_token=";
+            string raw = CURL(url, Prepare(JsonConvert.SerializeObject(data)));
+            return raw;
+        }
+
+
+
+
+
         public DetailResult GetDetail(long song_id)
         {
             string url = "http://music.163.com/weapi/v3/song/detail?csrf_token=";
