@@ -27,7 +27,7 @@
                 <MediaElement Name="me" LoadedBehavior="Manual"/>
             </StackPanel>
         </Grid>
-        <local:LrcUserControl x:Name="LrcView" Grid.Row="1" Margin="10" Height="50" VerticalAlignment="Top"/>
+        <local:LrcUserControl x:Name="LrcView" Grid.Row="1" Margin="10" Height="150" VerticalAlignment="Top"/>
         <Slider IsSnapToTickEnabled="True" TickFrequency="1" Style="{StaticResource Slider_CustomStyle}"  Name="sd" Height="20" VerticalAlignment="Top"  />
     </Grid>
 </UserControl>

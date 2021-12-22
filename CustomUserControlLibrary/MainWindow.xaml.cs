@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using CustomUserControlLibrary.Model.TencentModel;
 using CustomUserControlLibrary.Model.WYYmodel;
 using CustomUserControlLibrary.Model.SougouModel;
+using System.Net;
 
 namespace CustomUserControlLibrary
 {
@@ -34,6 +35,7 @@ namespace CustomUserControlLibrary
         public ObservableCollection<object> SongList = new ObservableCollection<object>();
 
 
+
         public List<PersonInfoModel> personInfoModels = new List<PersonInfoModel>();
         public delegate void GetMessageDataDelegate(object model);
         public GetMessageDataDelegate GetMessageHandler { get; set; }
@@ -44,10 +46,11 @@ namespace CustomUserControlLibrary
             InitializeComponent();
           //  SelectPath();
             this.Loaded += MainWindow_Loaded;
-            ClearTemp();
+         //   ClearTemp();
             //   APItest();
 
          //   Load_KugouLrc("quiet");
+
 
 
         }
@@ -94,7 +97,7 @@ namespace CustomUserControlLibrary
                 case "歌词显示":
                    // Load_Lrc(null,null);或者直接加载lrc到本地在传参
                     LrcShowControl lrcShowControl = new LrcShowControl();
-                    lrcShowControl.InitSong("28417153");
+                    lrcShowControl.InitSong("1903635166");
                   //  lrcShowControl.InitSong("","local", SelectPath(), SelectPath()); 没测
                     MainStackPanel.Children.Add(lrcShowControl);
                     break;
@@ -285,7 +288,7 @@ namespace CustomUserControlLibrary
             SearchSongModel searchSongModel = JsonConvert.DeserializeObject<SearchSongModel>(SongInfoJson);
             foreach (SearchSongModel.List SongInfo in searchSongModel.data.song.list)
             {
-                   TextBlock textBlock = new TextBlock();
+                TextBlock textBlock = new TextBlock();
                 textBlock.Tag = SongInfo;
                 textBlock.Text = SongName + "——" + SongInfo.singer[0].name +" 来自QQ音乐";
                 textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
@@ -298,21 +301,75 @@ namespace CustomUserControlLibrary
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //TextBlock textBlock = sender as TextBlock;
-            //SearchSongModel.List SongInfo = textBlock.Tag as SearchSongModel.List;
-            //GetVkey(SongInfo.songmid);
+            TextBlock textBlock = sender as TextBlock;
+            object targetTag = textBlock.Tag;
+            string objType =  targetTag.GetType().ToString();
+            switch(objType)
+            {
+                case "":
+                    break;
+                case " ":
+                    break;
+                case "  ":
+                    break;
+            }
+
+
+            //SougouSearchModel.Info SongInfo = targetTag as SougouSearchModel.Info;
+            //GetVkey(SongInfo);
         }
 
 
        // 
 
-        public void GetVkey(string SongMid)
+        public void GetVkey(SougouSearchModel.Info SongMid)
         {
             //byte[] buffer = Guid.NewGuid().ToByteArray();//生成字节数组
             //int iRoot = BitConverter.ToInt32(buffer, 0);//利用BitConvert方法把字节数组转换为整数
             //Random rdmNum = new Random(iRoot);
-            string SongInfoJson = mainServer.CommonGet(@"http://ws.stream.qqmusic.qq.com/C100"+ SongMid + ".m4a?fromtag=0&guid=126548448");
+            string SongInfoJson = mainServer.CommonGet(@"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash="+SongMid.hash);
+            string LrcJson = mainServer.CommonGet(@" http://www.kugou.com/yy/index.php?r=play/getdata&hash=" + SongMid.hash);
+            kugouLrcModel kugoulrcModel = JsonConvert.DeserializeObject<kugouLrcModel>(LrcJson);
+            //  SongInfoJson = SongInfoJson.Substring(23, SongInfoJson.Length - 44);
+            KugouDownModel kugouDownModel = JsonConvert.DeserializeObject<KugouDownModel>(SongInfoJson);
+           string  SongPath = AppDomain.CurrentDomain.BaseDirectory + "temp/" + DateTime.Now.ToString("ffffff") + ".mp3";
+            DownloadFile(kugouDownModel.backup_url[0], SongPath);
         }
+
+        public bool DownloadFile(string url, string destFilePath)
+        {
+            try
+            {
+                //创建目标目录
+                if (!Directory.Exists(System.IO.Path.GetDirectoryName(destFilePath)))
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(destFilePath));
+                // 设置参数
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                //发送请求并获取相应回应数据
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                //直到request.GetResponse()程序才开始向目标网页发送Post请求
+                Stream responseStream = response.GetResponseStream();
+                //创建本地文件写入流
+                Stream stream = new FileStream(destFilePath, FileMode.Create);
+                byte[] buf = new byte[10240];
+                int readSize = responseStream.Read(buf, 0, buf.Length);
+                while (readSize > 0)
+                {
+                    stream.Write(buf, 0, readSize);
+                    readSize = responseStream.Read(buf, 0, buf.Length);
+                }
+                stream.Close();
+                stream.Dispose();
+                responseStream.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return false;
+        }
+
 
         public string GetRandomGuid()
         {

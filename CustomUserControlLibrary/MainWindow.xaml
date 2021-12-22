@@ -122,7 +122,7 @@
                     </Grid>
                 </Grid>
                
-                <Grid Grid.Row="1"  x:Name="MainStackPanel"   FocusVisualStyle="{x:Null}">
+                <Grid Grid.Row="1" Grid.RowSpan="2"  x:Name="MainStackPanel"   FocusVisualStyle="{x:Null}">
                     
                 </Grid>
             </Grid>

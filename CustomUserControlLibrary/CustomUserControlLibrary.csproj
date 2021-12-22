@@ -107,6 +107,8 @@
     <Compile Include="Converter\TestConverter.cs" />
     <Compile Include="Converter\ValueToProcessConverter.cs" />
     <Compile Include="Model\ItemMenu.cs" />
+    <Compile Include="Model\SougouModel\KugouDownModel.cs" />
+    <Compile Include="Model\SougouModel\kugouLrcModel.cs" />
     <Compile Include="Model\SougouModel\SougouSearchModel.cs" />
     <Compile Include="Model\SubItem.cs" />
     <Compile Include="Model\TencentModel\SearchSongModel.cs" />

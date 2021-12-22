@@ -40,5 +40,7 @@ namespace CustomUserControlLibrary.Control
             NumLabel.Content = num;
             await Task.Delay(1000);
         }
+
+        
     }
 }
