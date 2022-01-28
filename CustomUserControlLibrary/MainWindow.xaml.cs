@@ -44,15 +44,12 @@ namespace CustomUserControlLibrary
         public MainWindow()
         {
             InitializeComponent();
-          //  SelectPath();
+            //  SelectPath();
             this.Loaded += MainWindow_Loaded;
-         //   ClearTemp();
+            //   ClearTemp();
             //   APItest();
 
-         //   Load_KugouLrc("quiet");
-
-
-
+            //   Load_KugouLrc("quiet");
         }
         NeteaseMusicAPI api = new NeteaseMusicAPI();
         //22632424
@@ -72,7 +69,7 @@ namespace CustomUserControlLibrary
             dic.Add("type", "1");
             SearchSongNameModel searchSongModel = JsonConvert.DeserializeObject<SearchSongNameModel>(api.GetSong(dic));
 
-            foreach(SearchSongNameModel.Song data in searchSongModel.result.songs)
+            foreach (SearchSongNameModel.Song data in searchSongModel.result.songs)
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.Tag = data;
@@ -80,8 +77,6 @@ namespace CustomUserControlLibrary
                 textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
                 textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
                 SongList.Add(textBlock);
-
-
             }
 
 
@@ -95,28 +90,32 @@ namespace CustomUserControlLibrary
             switch (item_0.Name)
             {
                 case "歌词显示":
-                   // Load_Lrc(null,null);或者直接加载lrc到本地在传参
+                    // Load_Lrc(null,null);或者直接加载lrc到本地在传参
                     LrcShowControl lrcShowControl = new LrcShowControl();
-                    lrcShowControl.InitSong("1903635166");
-                  //  lrcShowControl.InitSong("","local", SelectPath(), SelectPath()); 没测
-                    MainStackPanel.Children.Add(lrcShowControl);
+                    lrcShowControl.InitSong("26830207");
+                    //  lrcShowControl.InitSong("","local", SelectPath(), SelectPath()); 没测
+                    MainLrcStackPanel.Children.Add(lrcShowControl);
                     break;
                 case "血条":
                     //HealthPointControl healthPointControl = new HealthPointControl();
                     //MainStackPanel.Children.Add(healthPointControl);
                     break;
                 case "投票器":
+                    List<KeyWordValueLIst> keyWordValueLIsts = new List<KeyWordValueLIst>();
+                    KeyWordValueLIst keyWordValue1 = new KeyWordValueLIst("好运爆棚", AppDomain.CurrentDomain.BaseDirectory + "Image/bella.png");
+                    keyWordValueLIsts.Add(keyWordValue1);
+                    voteControl = new VoteControl("投票器的标题", keyWordValueLIsts);
+                    MainStackPanel.Children.Add(voteControl);
                     break;
                 case "倒计时":
-                    CountDownControl countDownControl = new CountDownControl(60,false);
+                    CountDownControl countDownControl = new CountDownControl(60, false);
                     MainStackPanel.Children.Add(countDownControl);
                     break;
                 case "弹幕上屏":
                     break;
             }
         }
-
-
+        VoteControl voteControl;
         private string SelectPath()
         {
             string path = string.Empty;
@@ -141,18 +140,18 @@ namespace CustomUserControlLibrary
 
 
 
-            public void AddBarrage(string Result)
+        public void AddBarrage(string Result)
         {
             this.Dispatcher.Invoke(new Action(delegate
             {
-                if(BarrageList.Count>=20)
+                if (BarrageList.Count >= 20)
                 {
                     BarrageList.RemoveAt(0);
                 }
                 //   BarrageStyle model = new BarrageStyle();
                 //  model.Barrage = Result;
                 BarrageList.Add(Result);
-          //      BarrageListView.Items.Add(Result);
+                //      BarrageListView.Items.Add(Result);
                 //   BarrageListView.SelectedIndex = BarrageListView.Items.Count - 1;
                 BarrageListView.ScrollIntoView(BarrageListView.SelectedItem);
             }));
@@ -175,8 +174,16 @@ namespace CustomUserControlLibrary
             uncleWebsocketService = new UncleWebsocketService(GetMessageHandler, Roomid);
         }
         private void GetOtherHeartDataCallback(object model)
-        {        
-                AddBarrage(model.ToString());
+        {
+            AddBarrage(model.ToString());
+            if (model.ToString() == "好运爆棚")
+            {
+                this.Dispatcher.Invoke(new Action(delegate
+                {
+                    voteControl.testtext.Text = (int.Parse(voteControl.testtext.Text) + 1).ToString();
+                }));
+            }
+
             //添加到投票器
         }
         //   28417153
@@ -252,7 +259,7 @@ namespace CustomUserControlLibrary
         {
             SongList.Clear();
             Load_Lrc(FSongName.Text);
-            WyySongSearch(FSongName.Text);
+          //  WyySongSearch(FSongName.Text);
             Load_KugouLrc(FSongName.Text);
 
 
@@ -263,8 +270,8 @@ namespace CustomUserControlLibrary
 
         private void Load_KugouLrc(string SongName)
         {
-            string SongInfoJson = mainServer.CommonGet(@"http://msearchcdn.kugou.com/api/v3/search/song?showtype=14&highlight=em&pagesize=5&tag_aggr=1&tagtype=全部&plat=0&sver=5&keyword="+ SongName + @"&correct=1&api_ver=1&version=9108&page=1&area_code=1&tag=1&with_res_tag=1" );
-            SongInfoJson = SongInfoJson.Substring(23, SongInfoJson.Length-44);
+            string SongInfoJson = mainServer.CommonGet(@"http://msearchcdn.kugou.com/api/v3/search/song?showtype=14&highlight=em&pagesize=5&tag_aggr=1&tagtype=全部&plat=0&sver=5&keyword=" + SongName + @"&correct=1&api_ver=1&version=9108&page=1&area_code=1&tag=1&with_res_tag=1");
+            SongInfoJson = SongInfoJson.Substring(23, SongInfoJson.Length - 44);
             SougouSearchModel searchSongModel = JsonConvert.DeserializeObject<SougouSearchModel>(SongInfoJson);
 
 
@@ -273,7 +280,7 @@ namespace CustomUserControlLibrary
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.Tag = SongInfo;
-                textBlock.Text = SongName + "——" + SongInfo.singername + " 来自搜狗音乐";
+                textBlock.Text = SongName + "——" + SongInfo.singername + " 来自酷狗音乐";
                 textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
                 textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
                 SongList.Add(textBlock);
@@ -290,7 +297,7 @@ namespace CustomUserControlLibrary
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.Tag = SongInfo;
-                textBlock.Text = SongName + "——" + SongInfo.singer[0].name +" 来自QQ音乐";
+                textBlock.Text = SongName + "——" + SongInfo.singer[0].name + " 来自QQ音乐";
                 textBlock.MouseLeftButtonUp += TextBlock_MouseLeftButtonDown;
                 textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
                 SongList.Add(textBlock);
@@ -303,36 +310,39 @@ namespace CustomUserControlLibrary
         {
             TextBlock textBlock = sender as TextBlock;
             object targetTag = textBlock.Tag;
-            string objType =  targetTag.GetType().ToString();
-            switch(objType)
+            string objType = targetTag.GetType().ToString();
+            string[] s = objType.Split('+');
+            switch (s[1])
             {
-                case "":
+                case "SearchSongModel.List":
                     break;
-                case " ":
+                case "SearchSongNameModel.Song":
                     break;
-                case "  ":
+                case "SougouSearchModel.Info":
+                    SougouSearchModel.Info SongInfo = targetTag as SougouSearchModel.Info;
+                    GetVkey(SongInfo);
                     break;
             }
 
 
-            //SougouSearchModel.Info SongInfo = targetTag as SougouSearchModel.Info;
-            //GetVkey(SongInfo);
+
+           
         }
 
 
-       // 
+        // 
 
         public void GetVkey(SougouSearchModel.Info SongMid)
         {
             //byte[] buffer = Guid.NewGuid().ToByteArray();//生成字节数组
             //int iRoot = BitConverter.ToInt32(buffer, 0);//利用BitConvert方法把字节数组转换为整数
             //Random rdmNum = new Random(iRoot);
-            string SongInfoJson = mainServer.CommonGet(@"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash="+SongMid.hash);
+            string SongInfoJson = mainServer.CommonGet(@"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash=" + SongMid.hash);
             string LrcJson = mainServer.CommonGet(@" http://www.kugou.com/yy/index.php?r=play/getdata&hash=" + SongMid.hash);
             kugouLrcModel kugoulrcModel = JsonConvert.DeserializeObject<kugouLrcModel>(LrcJson);
             //  SongInfoJson = SongInfoJson.Substring(23, SongInfoJson.Length - 44);
             KugouDownModel kugouDownModel = JsonConvert.DeserializeObject<KugouDownModel>(SongInfoJson);
-           string  SongPath = AppDomain.CurrentDomain.BaseDirectory + "temp/" + DateTime.Now.ToString("ffffff") + ".mp3";
+            string SongPath = AppDomain.CurrentDomain.BaseDirectory + "temp/" + DateTime.Now.ToString("ffffff") + ".mp3";
             DownloadFile(kugouDownModel.backup_url[0], SongPath);
         }
 
@@ -415,9 +425,17 @@ namespace CustomUserControlLibrary
 
         private void FSongName_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key==Key.Enter&&!string.IsNullOrWhiteSpace(FSongName.Text))
+            if (e.Key == Key.Enter && !string.IsNullOrWhiteSpace(FSongName.Text))
             {
-                SongSearch_Click(null,null);
+                SongSearch_Click(null, null);
+            }
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F5)
+            {
+                voteControl.testtext.Text = "0";
             }
         }
     }

@@ -78,10 +78,13 @@ namespace CustomUserControlLibrary.Control
                     //歌词取]后面的就行了
                     string lrc = str.Split(']')[1];
 
-
+                    
 
                     //歌词显示textblock控件
                     TextBlock c_lrcbk = new TextBlock();
+                    c_lrcbk.HorizontalAlignment = HorizontalAlignment.Center;
+                    c_lrcbk.FontSize = 40;
+                    c_lrcbk.FontFamily = new FontFamily("微软雅黑");
                     //赋值
                     c_lrcbk.Text = lrc;
                     if (c_lrc_items.Children.Count > 0)
@@ -137,13 +140,10 @@ namespace CustomUserControlLibrary.Control
 
             }
             else
-            {
-                //没有
+            {                //没有
                 s = Convert.ToInt32(timestr.Split(':')[1]);
-
             }
             return new TimeSpan(0, 0, m, s, f);
-
         }
         public void LrcRoll(double nowtime)
         {
@@ -160,7 +160,7 @@ namespace CustomUserControlLibrary.Control
                 {
                     LrcModel lm = s.Last().Value;
                     foucslrc.c_LrcTb.Foreground = NoramlLrcColor;
-
+                    foucslrc.c_LrcTb.VerticalAlignment = VerticalAlignment.Center;
                     foucslrc = lm;
                     foucslrc.c_LrcTb.Foreground = FoucsLrcColor;
                     //定位歌词在控件中间区域
@@ -210,7 +210,7 @@ namespace CustomUserControlLibrary.Control
             //滚动条当前位置
             //计算滚动位置（p.Y是焦点歌词控件(c_LrcTb)相对于父级控件c_lrc_items(StackPanel)的位置）
             //拿焦点歌词位置减去滚动区域控件高度除以2的值得到的【大概】就是歌词焦点在滚动区域控件的位置
-            double os = p.Y - (c_scrollviewer.ActualHeight / 2) + 10;
+            double os = p.Y - (c_scrollviewer.ActualHeight / 2) + 20;
             //滚动
             c_scrollviewer.ScrollToVerticalOffset(os);
 

@@ -218,7 +218,12 @@ namespace CustomUserControlLibrary.Server
                 foreach (string target in st)
                 {
                     JToken data = JObject.Parse(target);
-                    ProcessDanmaku((string)data.SelectToken("cmd"), CmdJsonString);
+                    string test = (string)data.SelectToken("cmd");
+                    if(test!= "DANMU_MSG")
+                    {
+                        continue;
+                    }
+                    ProcessDanmaku(test, target);
                 }
             }
             catch (Exception exception)

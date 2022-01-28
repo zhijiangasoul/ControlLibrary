@@ -75,7 +75,7 @@ namespace CustomUserControlLibrary.Control
             };
             Play(false);
             me.Source = new Uri(SongPath, UriKind.RelativeOrAbsolute);
-            me.Volume = 0;
+            me.Volume = 50;
             //设置为pause时才能达到启动应用后马上加载音乐以获取总时长
             me.LoadedBehavior = MediaState.Pause;
             //加载音乐后获取总时长
@@ -104,6 +104,7 @@ namespace CustomUserControlLibrary.Control
                 TimeSpan ts = new TimeSpan(0, st.m, st.s);
                 metime.Text = ts.ToString("mm") + ":" + ts.ToString("ss");
             };
+
         }
 
 
@@ -153,7 +154,7 @@ namespace CustomUserControlLibrary.Control
         {
 
             metime.Text = me.Position.ToString("mm") + ":" + me.Position.ToString("ss");
-
+            sd.Value= sd.Value+0.5;
             LrcView.LrcRoll(me.Position.TotalMilliseconds);
         }
         void Play(bool s)

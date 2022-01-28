@@ -24,7 +24,7 @@
             </Button>
         </StackPanel>
         <StackPanel Height="140">
-            <TextBox Height="auto" MaxWidth="200" Name="ShowTextBox" TextWrapping="Wrap"></TextBox>
+            <TextBox Height="auto" MaxWidth="200" Name="ShowTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"></TextBox>
         </StackPanel>
        
     </StackPanel>

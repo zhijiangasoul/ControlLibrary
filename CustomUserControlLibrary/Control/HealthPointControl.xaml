@@ -5,16 +5,46 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:SIn="clr-namespace:CustomUserControlLibrary.Converter"
              xmlns:tran="clr-namespace:CustomUserControlLibrary.Converter"
-             mc:Ignorable="d" >
+             mc:Ignorable="d"  Height="80" Width="1920">
     <UserControl.Resources>
         <SIn:HealthShowConvert x:Key="HealthShowConverter"></SIn:HealthShowConvert>
     </UserControl.Resources>
-    <Grid Height="15" Width="300">
-        <Border HorizontalAlignment="Left" Height="15" Width="151"  Background="White" CornerRadius="7.5 0 0 7.5"  BorderThickness="0"/>
-        <ProgressBar Height="15" Width="300" Value="{Binding testText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource  ProgressBarStyle}"  >
-            
-        </ProgressBar>
-      
+    <Grid>
+        <Grid x:Name="HeadImg" Panel.ZIndex="0">
+           
+         
+        </Grid>
+        <Grid Height="30" Width="1750" Margin="0 -15 0 0" Panel.ZIndex="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.RowSpan="2" Background="White" Opacity=".6"/>
+            <Grid Grid.Column="2" Grid.RowSpan="2" Background="White" Opacity=".6"/>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Border HorizontalAlignment="Center" Height="15" Width="850"  Background="#63585B"   BorderThickness="0"/>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="2">
+                <Border HorizontalAlignment="Center" Height="15" Width="850"  Background="#63585B"   BorderThickness="0"/>
+            </Grid>
+            <Grid Grid.RowSpan="2" Grid.Column="1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="White" Text="VS"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0">
+
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="2">
+
+            </Grid>
+            <!--<ProgressBar Height="15"  Value="{Binding testText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource  ProgressBarStyle}"  >
+
+        </ProgressBar>-->
+
+        </Grid>
     </Grid>
-  
 </UserControl>

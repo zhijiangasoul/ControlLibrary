@@ -10,7 +10,8 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920"  >
+        Title="MainWindow" Height="1080" Width="1920"  
+        KeyUp="Window_KeyUp">
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="1" CaptionHeight="1" CornerRadius="0"></WindowChrome>
     </WindowChrome.WindowChrome>
@@ -121,9 +122,21 @@
                        
                     </Grid>
                 </Grid>
-               
-                <Grid Grid.Row="1" Grid.RowSpan="2"  x:Name="MainStackPanel"   FocusVisualStyle="{x:Null}">
-                    
+
+                <Grid Grid.Row="1" Grid.RowSpan="2"   FocusVisualStyle="{x:Null}">
+                    <!--<Grid.Background >
+                        <ImageBrush ImageSource="ReferenceImg/345.jpg"></ImageBrush>
+                    </Grid.Background>-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1" x:Name="MainStackPanel" Panel.ZIndex="3">
+                        
+                    </Grid>
+                    <Grid Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="MainLrcStackPanel" Panel.ZIndex="3">
+
+                    </Grid>
                 </Grid>
             </Grid>
         </ScrollViewer>

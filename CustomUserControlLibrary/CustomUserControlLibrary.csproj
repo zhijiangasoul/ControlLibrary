@@ -80,6 +80,12 @@
     <Compile Include="Control\CountDownControl.xaml.cs">
       <DependentUpon>CountDownControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\HeadImg.xaml.cs">
+      <DependentUpon>HeadImg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Control\LrcGroundControl.xaml.cs">
+      <DependentUpon>LrcGroundControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Control\LrcShowControl.xaml.cs">
       <DependentUpon>LrcShowControl.xaml</DependentUpon>
     </Compile>
@@ -101,15 +107,20 @@
     <Compile Include="Control\UserControlMenuItem.xaml.cs">
       <DependentUpon>UserControlMenuItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Control\VoteControl.xaml.cs">
+      <DependentUpon>VoteControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\BaseBind.cs" />
     <Compile Include="Converter\HealthShowConvert.cs" />
     <Compile Include="Converter\ObservableObject.cs" />
     <Compile Include="Converter\TestConverter.cs" />
     <Compile Include="Converter\ValueToProcessConverter.cs" />
     <Compile Include="Model\ItemMenu.cs" />
+    <Compile Include="Model\KeyWordValueLIst.cs" />
     <Compile Include="Model\SougouModel\KugouDownModel.cs" />
     <Compile Include="Model\SougouModel\kugouLrcModel.cs" />
     <Compile Include="Model\SougouModel\SougouSearchModel.cs" />
+    <Compile Include="Model\StaticData.cs" />
     <Compile Include="Model\SubItem.cs" />
     <Compile Include="Model\TencentModel\SearchSongModel.cs" />
     <Compile Include="Model\TencentModel\TencentModel.cs" />
@@ -120,6 +131,7 @@
     <Compile Include="Model\Unclemodel\RoomConfig.cs" />
     <Compile Include="Model\Unclemodel\RoomInfo.cs" />
     <Compile Include="Model\Unclemodel\SingleConverter.cs" />
+    <Compile Include="Model\Unclemodel\testmodel.cs" />
     <Compile Include="Model\WYYmodel\NeteaseMusicAPI.cs" />
     <Compile Include="Model\PersonInfoModel.cs" />
     <Compile Include="Model\TestModel.cs" />
@@ -154,6 +166,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Control\HeadImg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\LrcGroundControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Control\LrcShowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\UserControlMenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\VoteControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,11 +262,21 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Resource Include="resource\content_icon_exit_mode_off.png" />
-    <Resource Include="Image\alien.png" />
-    <Resource Include="Image\eva.png" />
-    <Resource Include="Image\tina.png" />
-    <Resource Include="Image\le.png" />
-    <Resource Include="Image\bella.png" />
+    <Content Include="Image\alien.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Image\eva.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Image\tina.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Image\le.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Image\bella.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="resource\images\play.png" />
     <Resource Include="resource\images\Rain.png" />
     <Resource Include="resource\images\Snow.png" />
@@ -254,6 +288,9 @@
     <Content Include="DLL\websocket-sharp.dll" />
     <Content Include="DLL\zlib.net.dll" />
     <Resource Include="resource\images\min.png" />
+    <Content Include="Image\VoteIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scoreboard.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -266,6 +303,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ReferenceImg\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
