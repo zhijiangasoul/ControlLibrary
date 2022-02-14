@@ -199,7 +199,8 @@ namespace CustomUserControlLibrary
         //    GC.Collect();
         //    LrcShowControl lrcShowControl = new LrcShowControl(SongId.Text);
         //    MainPanel.Children.Add(lrcShowControl);
-        //}
+        //} 
+        #region 其他方法
         public string ReadTxtContent(string Path)
         {
             System.IO.StreamReader sr = new System.IO.StreamReader(Path, Encoding.UTF8);
@@ -210,7 +211,7 @@ namespace CustomUserControlLibrary
             }
             return null;
         }
-        #region 其他方法
+      
         public void ClearTemp()
         {
             string filePath = AppDomain.CurrentDomain.BaseDirectory + "temp";
@@ -259,7 +260,7 @@ namespace CustomUserControlLibrary
         {
             SongList.Clear();
             Load_Lrc(FSongName.Text);
-          //  WyySongSearch(FSongName.Text);
+            WyySongSearch(FSongName.Text);
             Load_KugouLrc(FSongName.Text);
 
 
@@ -312,13 +313,23 @@ namespace CustomUserControlLibrary
             object targetTag = textBlock.Tag;
             string objType = targetTag.GetType().ToString();
             string[] s = objType.Split('+');
-            switch (s[1])
+            string[] d = s[0].Split('.');
+
+            
+            switch (d[3])
             {
-                case "SearchSongModel.List":
+                case "SearchSongModel":
                     break;
-                case "SearchSongNameModel.Song":
+                case "SearchSongNameModel":
+                    SearchSongNameModel.Song song = targetTag as SearchSongNameModel.Song;
+
+                    LrcShowControl lrcShowControl = new LrcShowControl();
+                    lrcShowControl.InitSong(song.id);
+                    //  lrcShowControl.InitSong("","local", SelectPath(), SelectPath()); 没测
+                    MainLrcStackPanel.Children.Add(lrcShowControl);
+
                     break;
-                case "SougouSearchModel.Info":
+                case "SougouSearchModel":
                     SougouSearchModel.Info SongInfo = targetTag as SougouSearchModel.Info;
                     GetVkey(SongInfo);
                     break;

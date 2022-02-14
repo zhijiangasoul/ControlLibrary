@@ -148,6 +148,9 @@
     <Compile Include="Server\WebClientTime.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="test1.xaml.cs">
+      <DependentUpon>test1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestMainWindow.xaml.cs">
       <DependentUpon>TestMainWindow.xaml</DependentUpon>
     </Compile>
@@ -223,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Control\HealthPointControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="test1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

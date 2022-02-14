@@ -39,7 +39,6 @@ namespace CustomUserControlLibrary.Server
                 logger.Log(logEventInfo);
             }
             catch { }
-
         }
         public static void Info(string Msg)
         {

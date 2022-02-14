@@ -89,9 +89,8 @@ namespace CustomUserControlLibrary.Control
 
 
                     //歌词显示textblock控件
-                    TextBlock c_lrcbk = new TextBlock();
+                    LrcGroundControl c_lrcbk = new LrcGroundControl(lrc,40);
                     //赋值
-                    c_lrcbk.Text = lrc;
                     if (c_lrc_items.Children.Count > 0)
                     {
                         c_lrcbk.Margin = new Thickness(0, 10, 0, 0);

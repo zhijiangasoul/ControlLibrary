@@ -31,7 +31,7 @@ namespace CustomUserControlLibrary.Control
             /// <summary>
             /// 歌词所在控件
             /// </summary>
-            public TextBlock c_LrcTb { get; set; }
+            public LrcGroundControl c_LrcTb { get; set; }
 
             /// <summary>
             /// 歌词字符串
@@ -42,6 +42,12 @@ namespace CustomUserControlLibrary.Control
             /// 时间（读取格式参照网易云音乐歌词格式：xx:xx.xx，即分:秒.毫秒，秒小数点保留2位。如：00:28.64）
             /// </summary>
             public double Time { get; set; }
+
+
+            /// <summary>
+            /// 时间（读取格式参照网易云音乐歌词格式：xx:xx.xx，即分:秒.毫秒，秒小数点保留2位。如：00:28.64）
+            /// </summary>
+            public double NextTime { get; set; }
         }
 
 
@@ -56,12 +62,15 @@ namespace CustomUserControlLibrary.Control
         public SolidColorBrush NoramlLrcColor = new SolidColorBrush(Colors.Black);
         //焦点歌词颜色
         public SolidColorBrush FoucsLrcColor = new SolidColorBrush(Colors.OrangeRed);
-
+        public List<LrcModel> LrcTimeSave = new List<LrcModel>();
         public void LoadLrc(string lrcstr)
         {
             //循环以换行\n切割出歌词
-            foreach (string str in lrcstr.Split('\n'))
+            string[] lrcList = lrcstr.Split('\n');
+            int ForeachCount = -1;
+            foreach (string str in lrcList)
             {
+                ForeachCount++;
                 //过滤空行，判断是否存在时间
                 if (str.Length > 0 && str.IndexOf(":") != -1)
                 {
@@ -77,16 +86,20 @@ namespace CustomUserControlLibrary.Control
                     }
                     //歌词取]后面的就行了
                     string lrc = str.Split(']')[1];
-
-                    
-
+                    double LastTime = 0;
+                    double NextTime = 0;
+                    if (LrcTimeSave.Count != 0)
+                    {
+                        LastTime = LrcTimeSave.Last().Time;
+                        NextTime = time.TotalMilliseconds - LastTime;
+                        LrcTimeSave[LrcTimeSave.Count() - 1].NextTime = NextTime;
+                        Lrcs.Last().Value.NextTime = NextTime;
+                    }
                     //歌词显示textblock控件
-                    TextBlock c_lrcbk = new TextBlock();
+                    LrcGroundControl c_lrcbk = new LrcGroundControl(lrc,40);
                     c_lrcbk.HorizontalAlignment = HorizontalAlignment.Center;
-                    c_lrcbk.FontSize = 40;
                     c_lrcbk.FontFamily = new FontFamily("微软雅黑");
                     //赋值
-                    c_lrcbk.Text = lrc;
                     if (c_lrc_items.Children.Count > 0)
                     {
                         c_lrcbk.Margin = new Thickness(0, 10, 0, 0);
@@ -99,7 +112,7 @@ namespace CustomUserControlLibrary.Control
                             LrcText = lrc,
                             Time = time.TotalMilliseconds
 
-                        });
+                        }) ;
                     }
                     else
                     {
@@ -113,12 +126,14 @@ namespace CustomUserControlLibrary.Control
                     }
                     //添加到集合，方便日后操作
 
-
+                    LrcTimeSave.Add(Lrcs[time.TotalMilliseconds]);
                     //将歌词显示textblock控件添加到界面中显示
                     c_lrc_items.Children.Add(c_lrcbk);
 
                 }
             }
+           
+
         }
 
         //正则表达式提取时间
@@ -159,10 +174,11 @@ namespace CustomUserControlLibrary.Control
                 if (s.Count() > 0)
                 {
                     LrcModel lm = s.Last().Value;
-                    foucslrc.c_LrcTb.Foreground = NoramlLrcColor;
+                  //  foucslrc.c_LrcTb.Foreground = NoramlLrcColor;
                     foucslrc.c_LrcTb.VerticalAlignment = VerticalAlignment.Center;
-                    foucslrc = lm;
-                    foucslrc.c_LrcTb.Foreground = FoucsLrcColor;
+                    foucslrc.c_LrcTb.InitTime(foucslrc.NextTime);
+                   foucslrc = lm;
+                 //   foucslrc.c_LrcTb.Foreground = FoucsLrcColor;
                     //定位歌词在控件中间区域
                     ResetLrcviewScroll();
                 }

@@ -1,5 +1,6 @@
 ﻿using CustomUserControlLibrary.Model;
 using CustomUserControlLibrary.Model.WYYmodel;
+using CustomUserControlLibrary.Server;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,10 +58,12 @@ namespace CustomUserControlLibrary.Control
                 DownloadFile(SongUrl, SongPath);
                 System.Threading.Thread.Sleep(2000);
             }
-          
+            LogServer.Info(lrc);
+
             LrcView.LoadLrc(lrc);
 
             //初始化计时器
+
             dt = new DispatcherTimer();
             /*
              * 2018年1月12日10:04:48
@@ -76,8 +79,10 @@ namespace CustomUserControlLibrary.Control
             Play(false);
             me.Source = new Uri(SongPath, UriKind.RelativeOrAbsolute);
             me.Volume = 50;
+           
             //设置为pause时才能达到启动应用后马上加载音乐以获取总时长
             me.LoadedBehavior = MediaState.Pause;
+            me.LoadedBehavior = MediaState.Manual;
             //加载音乐后获取总时长
             me.MediaOpened += (e, c) =>
             {
@@ -85,8 +90,11 @@ namespace CustomUserControlLibrary.Control
                 sd.Maximum = (me.NaturalDuration.TimeSpan.Minutes * 60) + me.NaturalDuration.TimeSpan.Seconds;
                 //重新设置为手动播放模式，否则无法播放音乐
                 me.LoadedBehavior = MediaState.Manual;
+                double LastNextTime = LrcView.Lrcs.Last().Value.Time;
+                LrcView.Lrcs.Last().Value.NextTime = sd.Maximum * 1000 - LastNextTime;
             };
 
+           
 
             //监听slider的鼠标释放事件，即拖动时不调整音乐的进度，拖动后再调整
             sd.PreviewMouseLeftButtonUp += (e, c) =>

@@ -4,12 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CustomUserControlLibrary.Control"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
-        <Canvas ClipToBounds="True" Name="ColorLayer" Width="20" Panel.ZIndex="1" HorizontalAlignment="Left">
-            <Label Foreground="Red" FontSize="50" >测试</Label>
+             mc:Ignorable="d" >
+    <Grid Background="Transparent">
+        <Canvas ClipToBounds="True" Name="ColorLayer"  Width="0" Panel.ZIndex="1" HorizontalAlignment="Left">
+            <TextBlock Name="ColorLabel" Foreground="Red" FontSize="40" >测试</TextBlock>
         </Canvas>
-        <Label Name="WordLabel" FontSize="50" Foreground="Black" >测试</Label>
+        <TextBlock Name="WordLabel" FontSize="40" Foreground="Black" >测试</TextBlock>
     </Grid>
 </UserControl>
